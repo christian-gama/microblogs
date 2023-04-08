@@ -21,7 +21,7 @@ The project is organized into the following directories:
 
 ## Dependencies
 
-The project uses Go 1.20 and the GoFiber framework (github.com/gofiber/fiber/v2) for HTTP server implementation.
+The project uses Go 1.20, the GoFiber framework (github.com/gofiber/fiber) for HTTP server implementation and Docker/Kubernetes for containerization and orchestration.
 
 ## Build and Run
 
