@@ -1,7 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
+	"net/http"
+
+	"github.com/christian-gama/shared/event"
 )
 
 type Post struct {
@@ -64,7 +68,7 @@ func (ps *PostStore) UpdateCommentInPost(comment *Comment) error {
 	return nil
 }
 
-func parsePost(data interface{}) *Post {
+func ParsePost(data interface{}) *Post {
 	dataMap := data.(map[string]interface{})
 	return &Post{
 		ID:    dataMap["id"].(string),
@@ -72,7 +76,7 @@ func parsePost(data interface{}) *Post {
 	}
 }
 
-func parseComment(data interface{}) *Comment {
+func ParseComment(data interface{}) *Comment {
 	dataMap := data.(map[string]interface{})
 	return &Comment{
 		ID:      dataMap["id"].(string),
@@ -80,4 +84,35 @@ func parseComment(data interface{}) *Comment {
 		Status:  dataMap["status"].(string),
 		PostID:  dataMap["postId"].(string),
 	}
+}
+
+func HandleEvent(event *event.Event[map[string]any], postStore *PostStore) {
+	if event.Type == "PostCreated" {
+		post := ParsePost(event.Data)
+		postStore.AddPost(post)
+	}
+
+	if event.Type == "CommentCreated" {
+		comment := ParseComment(event.Data)
+		postStore.AddCommentToPost(comment)
+	}
+
+	if event.Type == "CommentUpdated" {
+		comment := ParseComment(event.Data)
+		postStore.UpdateCommentInPost(comment)
+	}
+}
+
+func RetrieveEvents() []event.Event[map[string]any] {
+	resp, err := http.Get("http://localhost:4005/events")
+	if err != nil {
+		panic(err)
+	}
+
+	events := []event.Event[map[string]any]{}
+	if err := json.NewDecoder(resp.Body).Decode(&events); err != nil {
+		panic(err)
+	}
+
+	return events
 }

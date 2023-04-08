@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/christian-gama/event-bus/pkg/event"
+	"github.com/christian-gama/shared/event"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
@@ -22,23 +22,12 @@ func main() {
 			return err
 		}
 
-		if event.Type == "PostCreated" {
-			post := parsePost(event.Data)
-			postStore.AddPost(post)
-		}
-
-		if event.Type == "CommentCreated" {
-			comment := parseComment(event.Data)
-			postStore.AddCommentToPost(comment)
-		}
-
-		if event.Type == "CommentUpdated" {
-			comment := parseComment(event.Data)
-			postStore.UpdateCommentInPost(comment)
-		}
+		HandleEvent(event, postStore)
 
 		return nil
 	})
+
+	RetrieveEvents()
 
 	app.Listen(":4002")
 }

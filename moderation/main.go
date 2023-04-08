@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/christian-gama/event-bus/pkg/event"
+	"github.com/christian-gama/shared/event"
 	"github.com/gofiber/fiber/v2"
 )
 

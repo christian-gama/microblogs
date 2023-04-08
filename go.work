@@ -1,0 +1,10 @@
+go 1.20
+
+use (
+	./posts
+	./comments
+	./shared
+	./query
+	./moderation
+	./eventbus
+)

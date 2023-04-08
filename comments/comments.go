@@ -3,8 +3,8 @@ package main
 import (
 	"sync"
 
-	"github.com/christian-gama/event-bus/pkg/event"
-	"github.com/christian-gama/event-bus/pkg/utils"
+	"github.com/christian-gama/shared/event"
+	"github.com/christian-gama/shared/utils"
 	"github.com/gofiber/fiber/v2"
 )
 

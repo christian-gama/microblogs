@@ -3,7 +3,7 @@ package main
 import (
 	"strings"
 
-	"github.com/christian-gama/event-bus/pkg/event"
+	"github.com/christian-gama/shared/event"
 )
 
 func ModerateComment(comment *Comment) *event.Event[*Comment] {
