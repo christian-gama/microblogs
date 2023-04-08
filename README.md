@@ -19,9 +19,11 @@ The project is organized into the following directories:
 
 `./eventbus`: Contains the code for the EventBus service.
 
+`./client`: Contains the code for the Web Client service, which is built in React.
+
 ## Dependencies
 
-The project uses Go 1.20, the GoFiber framework (github.com/gofiber/fiber) for HTTP server implementation and Docker/Kubernetes for containerization and orchestration.
+The project uses Go 1.20, the GoFiber framework (github.com/gofiber/fiber) for HTTP server implementation and Docker/Kubernetes for containerization and orchestration. There is also a React web client that uses the Axios library for HTTP requests.
 
 ## Build and Run
 
@@ -36,6 +38,8 @@ A Makefile is provided to build and run each service. The available targets are:
 `moderation`: Builds and runs the CommentModerator service.
 
 `query`: Builds and runs the Query service.
+
+`client`: Builds and runs the Web Client service in React.
 
 To build and run a specific service, use the `make` command followed by the target name. For example, to run the Posts service:
 

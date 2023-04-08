@@ -17,3 +17,7 @@ moderation:
 .PHONY: query
 query:
 	go run ./query/*.go
+
+.PHONY: client
+client:
+	cd client && npm start
