@@ -3,6 +3,8 @@ package event
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
@@ -34,6 +36,12 @@ func Send[T any](event *Event[T]) error {
 		return err
 	}
 
-	_, err = http.Post("http://localhost:4005/events", "application/json", bytes.NewReader(marshalledEvent))
-	return err
+	fmt.Println("Sending event to event bus")
+	_, err = http.Post("http://eventbus-clusterip-srv:4005/events", "application/json", bytes.NewReader(marshalledEvent))
+	if err != nil {
+		log.Println("EventBus is down", err)
+		return err
+	}
+
+	return nil
 }
