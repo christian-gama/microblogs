@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"io"
 	"net/http"
 
 	"github.com/christian-gama/shared/event"
@@ -104,14 +105,16 @@ func HandleEvent(event *event.Event[map[string]any], postStore *PostStore) {
 }
 
 func RetrieveEvents() []event.Event[map[string]any] {
-	resp, err := http.Get("http://localhost:4005/events")
+	resp, err := http.Get("http://eventbus-clusterip-srv:4005/events")
 	if err != nil {
 		panic(err)
 	}
 
 	events := []event.Event[map[string]any]{}
 	if err := json.NewDecoder(resp.Body).Decode(&events); err != nil {
-		panic(err)
+		if err != io.EOF {
+			panic(err)
+		}
 	}
 
 	return events

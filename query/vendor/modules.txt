@@ -59,3 +59,4 @@ github.com/valyala/tcplisten
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows
+# github.com/christian-gama/shared => ../shared
