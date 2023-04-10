@@ -24,13 +24,6 @@ func NewPostStore() *PostStore {
 	}
 }
 
-func (ps *PostStore) GetPosts() map[string]*Post {
-	ps.mu.Lock()
-	defer ps.mu.Unlock()
-
-	return ps.posts
-}
-
 func (ps *PostStore) AddPost(post *Post) *event.Event[*Post] {
 	ps.mu.Lock()
 	defer ps.mu.Unlock()

@@ -1,0 +1,54 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    # This annotation is required for the nginx ingress controller to work. It will 
+    # continuously scan all the different config files and try to find the one with that
+    # exact name.
+    kubernetes.io/ingress.class: nginx 
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+    # Kubernetes can handle multiple hosts in a single Kubernetes cluster, so we must
+    # specify which host we want to use. In a local environment, we have to trick the
+    # computer into thinking that we are using a real domain name, replacing it by 
+    # localhost. In macOs/Linux, we can do this by adding the following line to our
+    # /etc/hosts file. In Windows, we can do this by editing the C:\Windows\System32\drivers\etc\hosts file.
+    # If I'm using minikube, it must be the IP of the minikube VM, which can be found by running
+    # minikube ip. If I'm using Docker Desktop, it is the 127.0.0.1 address.
+    # Development environment only!
+    - host: app.com
+      http:
+        paths:
+          - path: /posts/create
+            pathType: Prefix
+            backend:
+              service:
+                name: posts-clusterip-srv
+                port:
+                  number: 4000
+
+          - path: /posts
+            pathType: Prefix
+            backend:
+              service:
+                name: query-clusterip-srv
+                port:
+                  number: 4002
+
+          - path: /posts/?(.*)/comments
+            pathType: Prefix
+            backend:
+              service:
+                name: comments-clusterip-srv
+                port:
+                  number: 4001
+
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: client-clusterip-srv
+                port:
+                  number: 3000

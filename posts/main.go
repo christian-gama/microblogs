@@ -13,12 +13,7 @@ func main() {
 	app := fiber.New()
 	app.Use(cors.New(cors.Config{}))
 
-	app.Get("/posts", func(c *fiber.Ctx) error {
-		posts := postStore.GetPosts()
-		return c.JSON(posts)
-	})
-
-	app.Post("/posts", func(c *fiber.Ctx) error {
+	app.Post("/posts/create", func(c *fiber.Ctx) error {
 		log.Println("Saving post")
 		post, err := parsePost(c)
 		if err != nil {
