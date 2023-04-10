@@ -1,30 +1,10 @@
-.PHONY: post
-post:
-	go run ./posts/*.go
-
-.PHONY: comment
-comment:
-	go run ./comments/*.go
-
-.PHONY: event
-event:
-	go run ./eventbus/*.go
-
-.PHONY: moderation
-moderation:
-	go run ./moderation/*.go
-
-.PHONY: query
-query:
-	go run ./query/*.go
-
-.PHONY: client
-client:
-	cd client && npm start
+.PHONY: dev
+dev:
+	@skaffold dev
 
 .PHONY: publish
 publish:
-	cd comments && docker build -t christiangama/comments:latest . && \
+	@cd comments && docker build -t christiangama/comments:latest . && \
 	cd ../eventbus && docker build -t christiangama/eventbus:latest . && \
 	cd ../moderation && docker build -t christiangama/moderation:latest . && \
 	cd ../posts && docker build -t christiangama/posts:latest . && \

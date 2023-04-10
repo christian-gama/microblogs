@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"github.com/christian-gama/shared/event"
 	"github.com/gofiber/fiber/v2"
 )
@@ -16,6 +18,8 @@ func main() {
 	app := fiber.New()
 
 	app.Post("/events", func(c *fiber.Ctx) error {
+		log.Println("Received event")
+
 		e, err := event.Parse[*Comment](c)
 		if err != nil {
 			return err

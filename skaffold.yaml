@@ -1,0 +1,65 @@
+apiVersion: skaffold/v4beta4
+kind: Config
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
+build:
+  local:
+    push: false # Whenever skaffold tries to build a new image, it will not push it to Docker Hub.
+  artifacts:
+    - image: christiangama/client
+      context: client # Context is the folder where the Dockerfile is located - client/Dockerfile
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          # If I change any of the *.js files inside the src folder, it it automatically
+          # send the files to the container.
+          # The files that does not match the pattern, skaffold will rebuild the image.
+          - src: 'src/**/*.js'
+            dest: .
+
+    - image: christiangama/comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.go'
+            dest: .
+
+    - image: christiangama/query
+      context: query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.go'
+            dest: .
+    
+    - image: christiangama/posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.go'
+            dest: .
+    
+    - image: christiangama/eventbus
+      context: eventbus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.go'
+            dest: .
+    
+    - image: christiangama/moderation
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.go'
+            dest: .

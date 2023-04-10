@@ -15,6 +15,7 @@ func main() {
 
 	app.Post("/posts/create", func(c *fiber.Ctx) error {
 		log.Println("Saving post")
+
 		post, err := parsePost(c)
 		if err != nil {
 			return c.Status(400).SendString("Failed to parse post")
@@ -28,6 +29,7 @@ func main() {
 
 	app.Post("/events", func(c *fiber.Ctx) error {
 		log.Println("Received event")
+
 		return nil
 	})
 

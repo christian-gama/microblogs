@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"github.com/christian-gama/shared/event"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -12,6 +14,8 @@ func main() {
 	app.Use(cors.New(cors.Config{}))
 
 	app.Get("/posts/:id/comments", func(c *fiber.Ctx) error {
+		log.Println("Retrieving comments")
+
 		comments, ok := commentStore.GetComments(c.Params("id"))
 		if !ok {
 			return c.SendStatus(404)
@@ -20,6 +24,8 @@ func main() {
 	})
 
 	app.Post("/posts/:id/comments", func(c *fiber.Ctx) error {
+		log.Println("Saving comment")
+
 		comment, err := parseComment(c)
 		if err != nil {
 			return err
@@ -31,6 +37,8 @@ func main() {
 	})
 
 	app.Post("/events", func(c *fiber.Ctx) error {
+		log.Println("Received event")
+
 		e, err := event.Parse[*Comment](c)
 		if err != nil {
 			return err

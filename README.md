@@ -1,7 +1,9 @@
 # MicroBlogs
 ---
 
-A simple microservices project that uses an in-memory database and a custom event bus for simplicity and learning purposes.
+This is a port of the [Stephen Grider's MicroBlogs project](https://www.udemy.com/course/microservices-with-node-js-and-react/) written in NodeJS to Go.
+
+A simple microservices project that uses an in-memory database and a custom event bus for simplicity and learning purposes. It runs on a Docker/Kubernetes cluster and uses a React web client.
 
 ## Project Structure
 
@@ -23,7 +25,11 @@ The project is organized into the following directories:
 
 ## Dependencies
 
-The project uses Go 1.20, the GoFiber framework (github.com/gofiber/fiber) for HTTP server implementation and Docker/Kubernetes for containerization and orchestration. There is also a React web client that uses the Axios library for HTTP requests.
+- [Docker](https://docs.docker.com/get-docker/)
+- [Kubernetes](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+- [Skaffold](https://skaffold.dev/docs/install/)
+- [Go](https://golang.org/doc/install)
+- [React](https://react.dev/learn)
 
 ## Build and Run
 
@@ -44,7 +50,7 @@ A Makefile is provided to build and run each service. The available targets are:
 To build and run a specific service, use the `make` command followed by the target name. For example, to run the Posts service:
 
 ```bash
-make post
+make dev
 ```
 
-To run the other services, replace `post` with the appropriate target name.
+Alternatively, you can run the `skaffold dev` command to build and run all services. This will also watch for changes and automatically rebuild and redeploy the services as needed.

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: posts
-          image: christiangama/posts:latest
+          image: christiangama/posts
 ---
 apiVersion: v1
 kind: Service

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: query
-          image: christiangama/query:latest
+          image: christiangama/query
 ---
 apiVersion: v1
 kind: Service

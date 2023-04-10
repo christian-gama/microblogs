@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: eventbus
-          image: christiangama/eventbus:latest
+          image: christiangama/eventbus
 ---
 apiVersion: v1
 kind: Service
